@@ -7,10 +7,7 @@
 
 #include "../a2-lib/program.h"
 
-typedef struct {
-    int stack_pointer;
-    unsigned long* stack;
-} Context;
+
 
 void interpret(Program* p);
 

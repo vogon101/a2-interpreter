@@ -7,6 +7,6 @@
 
 unsigned int make_int(const unsigned char* str);
 unsigned long make_long(const unsigned char* str);
-
+unsigned short make_short(const unsigned char* str);
 
 #endif //A2_INTERPRETER_UTILS_H

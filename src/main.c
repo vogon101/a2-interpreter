@@ -3,6 +3,7 @@
 #include "a2-lib/program.h"
 #include "interpreter/file_utils.h"
 #include "interpreter/interpreter.h"
+#include "interpreter/file_reader.h"
 
 #define FILENAME "compiled1.a2"
 
@@ -11,7 +12,7 @@ int main() {
 
     FileContents* fc = read_file(FILENAME);
 
-    Program* p = make_program(fc->contents, fc->length);
+    Program* p = read_program(fc->contents, fc->length);
 
     interpret(p);
 
