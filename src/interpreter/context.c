@@ -9,6 +9,9 @@ Context* create_context(int stack_size, int heap_size) {
     if (!ctx)
         return NULL;
 
+    ctx->stack_size = stack_size;
+    ctx->heap_size = heap_size;
+
     ctx->code_pointer = 0;
     ctx->stack_pointer = 0;
     ctx->stack = malloc(sizeof(unsigned long) * stack_size);
@@ -24,5 +27,6 @@ Context* create_context(int stack_size, int heap_size) {
 
 void free_context(Context* ctx) {
     free(ctx->stack);
+    free(ctx->heap);
     free(ctx);
 }

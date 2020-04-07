@@ -7,20 +7,13 @@
 
 #include "instruction.h"
 
-enum ArithmeticInstructions {
+typedef enum ArithmeticInstructions {
     INST_ARITH_ADD,
     INST_ARITH_SUB,
     INST_ARITH_MULT,
     INST_ARITH_DIV
-};
+} ArithmeticInstructions;
 
-const static InstructionTypeConversion arithmetic_itcs[] = {
-        {INST_ARITH_ADD, "ADD-"},
-        {INST_ARITH_SUB, "SUB-"},
-        {INST_ARITH_DIV, "DIV-"},
-        {INST_ARITH_MULT, "MULT"}
-};
+#define ARITHMETIC_INSTRUCTION_COUNT 4
 
-const static size_t arithmetic_itcs_size = 4;
-
-#endif //A2_INTERPRETER_INSTRUCTIONS_ARITHMETIC_H
+#endif //A2_INTERPRETER_INTERP_INSTRUCTIONS_ARITHMETIC_H

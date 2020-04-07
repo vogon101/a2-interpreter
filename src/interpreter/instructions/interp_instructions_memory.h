@@ -1,15 +1,12 @@
 //
-// Created by Freddie on 27/03/2020.
+// Created by fredd on 28/03/2020.
 //
 
 #ifndef A2_INTERPRETER_INTERP_INSTRUCTIONS_MEMORY_H
 #define A2_INTERPRETER_INTERP_INSTRUCTIONS_MEMORY_H
 
-enum MemoryInstructions {
-    INST_MEM_PUSH,
-    INST_MEM_SAVE
-};
+#include "interp_instructions.h"
 
-#define MEMORY_INSTRUCTION_COUNT 2
+int interpret_memory_instruction(const Instruction* instruction, Context* context);
 
 #endif //A2_INTERPRETER_INTERP_INSTRUCTIONS_MEMORY_H

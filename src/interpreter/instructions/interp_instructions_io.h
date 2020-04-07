@@ -1,16 +1,13 @@
 //
-// Created by Freddie on 27/03/2020.
+// Created by fredd on 28/03/2020.
 //
 
 #ifndef A2_INTERPRETER_INTERP_INSTRUCTIONS_IO_H
 #define A2_INTERPRETER_INTERP_INSTRUCTIONS_IO_H
 
-enum IOInstructions {
-    INST_IO_PEEK,
-    INST_IO_DISPLAY,
-    INST_IO_DEBUG
-};
+#include "interp_instructions.h"
 
-#define IO_INSTRUCTION_COUNT 3
+int interpret_io_instruction(const Instruction* instruction, Context* context);
+
 
 #endif //A2_INTERPRETER_INTERP_INSTRUCTIONS_IO_H

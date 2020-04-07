@@ -1,15 +1,12 @@
 //
-// Created by Freddie on 27/03/2020.
+// Created by fredd on 28/03/2020.
 //
 
 #ifndef A2_INTERPRETER_INTERP_INSTRUCTIONS_CONTROL_H
 #define A2_INTERPRETER_INTERP_INSTRUCTIONS_CONTROL_H
 
-enum ControlInstructions {
-    INST_CONTROL_HALT,
-    INST_CONTROL_ERROR
-};
+#include "interp_instructions.h"
 
-#define CONTROL_INSTRUCTION_COUNT 2
+int interpret_control_instruction(const Instruction* instruction, Context* context);
 
 #endif //A2_INTERPRETER_INTERP_INSTRUCTIONS_CONTROL_H

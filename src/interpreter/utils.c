@@ -22,3 +22,4 @@ unsigned long make_long(const unsigned char *str) {
 unsigned short make_short(const unsigned char* str) {
     return (str[0] << 8u) + str[1];
 }
+

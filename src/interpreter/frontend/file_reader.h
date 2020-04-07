@@ -5,7 +5,7 @@
 #ifndef A2_INTERPRETER_FILE_READER_H
 #define A2_INTERPRETER_FILE_READER_H
 
-#include "../a2-lib/program.h"
+#include "../../a2-lib/program.h"
 
 Program* read_program(const unsigned char *program, long f_length);
 

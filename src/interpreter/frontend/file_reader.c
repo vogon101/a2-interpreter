@@ -4,10 +4,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../a2-lib/include.h"
-#include "utils.h"
-#include "file_reader.h"
-#include "config.h"
+#include "../../a2-lib/include.h"
+#include "../include.h"
+#include "instruction_converters.h"
+#include "../log.h"
 
 
 char* extract_instruction_name(const char* str) {
@@ -20,12 +20,40 @@ char* extract_instruction_name(const char* str) {
 
 
 
-InstructionID get_instruction_type(char* instruction) {
-    for (int i = 0; i < sizeof(instruction_category_conversion) / sizeof(instruction_category_conversion[0]); i++) {
-        if(!strcmp(instruction, instruction_category_conversion[i].str))
-            return instruction_category_conversion[i].it;
+InstructionID* get_instruction_id(char* instruction) {
+    const InstructionCategoryConversion* category = NULL;
+    const InstructionType* type = NULL;
+
+    // Find the category of instruction
+    for (int i = 0; i < INSTRUCTION_CATEGORY_COUNT; i++) {
+        if(!strncmp(instruction, instruction_category_conversion[i].str, INST_CAT_LEN)) {
+            category = instruction_category_conversion + i;
+            break;
+        }
     }
-    return INST_ERROR;
+
+    if (!category) {
+        log_error("Failed to find category");
+        return NULL;
+    }
+
+    //Find the type of instruction
+    for (int i = 0; i < category->itcs_size; i++) {
+        if (!strncmp(instruction + INST_CAT_LEN, category->itcs[i].str, INST_TYP_LEN))
+            type = &(category->itcs[i].inst_type);
+    }
+    if (!type) {
+        log_error("Failed to find type");
+        return NULL;
+    }
+
+    //printf("Found instruction id %i %i\n", category->category, *type);
+
+    InstructionID* inst_id = malloc(sizeof(InstructionID));
+    inst_id->inst_type = *type;
+    inst_id->inst_category = category->category;
+
+    return inst_id;
 }
 
 Instruction make_instruction(const char *instruction) {
@@ -45,8 +73,9 @@ Instruction make_instruction(const char *instruction) {
     }
 
     unsigned int op = make_long((const unsigned char *) instruction + INST_NAME_LEN + 1);
-    printf("Instruction %s %c %8x\n", inst, op_type, op);
-    Instruction res = {get_instruction_type(inst), operandType, op};
+    log_debug("+ %s %c %8x", inst, op_type, op);
+    InstructionID* instructionID = get_instruction_id(inst);
+    Instruction res = {*instructionID, operandType, op};
     return res;
 }
 
@@ -56,9 +85,9 @@ Program* read_program(const unsigned char *program, long f_length) {
     unsigned short headerLength = make_short(program + 2);
     unsigned int programLength = make_int(program + 4);
 
-    printf("Version: %4xs, Header Length: %4xs", version, headerLength);
-    printf("Program length (instructions) %u\n", programLength);
-    printf("Program length (chars) %ld\n", f_length);
+    log_debug("Version: %4hu, Header Length: %4hu", version, headerLength);
+    log_debug("Program length (instructions) %u", programLength);
+    log_debug("Program length (chars) %ld", f_length);
 
     Instruction* m_arena = malloc(sizeof(Instruction) * programLength);
     //TODO functions
